@@ -1,1 +1,47 @@
-Привет
+<div ng-app ng-controller="controlPage">
+	<div id = "downPanelControl">
+		<ul class = "panelButton">
+			<li ng-click="setPage(0)" title="Пополнить доску объявлений" class = "editting opacity07 opacityNo"></li>
+			<li ng-click="setPage(1)" title="Настройки" class = "addAdvent opacity07 opacityNo"></li>
+			<li ng-click="setPage(2)" title="Авторский состав" class = "avtor opacity07 opacityNo"></li>
+			<li ng-click="setPage(3)" title="Агитационный материал" class = "baner opacity07 opacityNo"></li>
+		</ul>
+	</div>
+	
+	<!--Разные выпадающие окна-->
+	<div id="editting" title="Настройки">
+		<p>Громкость:</p> 
+		<div id="slider-range-max"></div>
+		<div class = "closeDialog" ng-click="closePage(1)">OK</div>
+	</div>
+	<div id="addAdvent" ng-show="showPage==0"> 
+		<div class = "footer">
+			<div id = "buttonAddAdvent" class="v-t opacity07 opacityNo">п о д а т ь</div>
+			<div id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(0)">о т м е н а</div>
+		</div>
+		<img src = "assets/design/avatar.png"/>
+		<div class = "warning" style = "width: 300px; float: right;">
+			Сообщение ограничено по числу символов.
+		</div>
+		<input class="tags" placeholder = "URL аватара">
+		<input class="tags" placeholder = "Автор">
+		<input class="tags" placeholder = "Заголовок" style = "width: 92%; margin-bottom: 7px; margin-left: 10px;">
+		<div id = "errorAdvent" class = "warning" style = "display: none">
+			Превышен допустимый размер сообщения
+		</div>
+		<textarea class = "advent" placeholder = "Текст объявления..."></textarea>
+		
+	</div>
+	<div id="avtor" title="Про авторов"> 
+		<p>Сайт разработан специально для летней Фандомной битвы 2014 на dairy.ru командой <a href = "#">Noragami</a>.</p>
+		<p>Полный авторский состав будет представлен после деанона.</p>
+		<div class = "closeDialog" ng-click="closePage(2)">OK</div>
+	</div>
+	<div id="baner" title="Агитационный материал"> 
+		Тут будет баннер на нашу выкладку и на игру в отдельности.
+		<div class = "closeDialog" ng-click="closePage(3)">OK</div>
+	</div>
+	<div id="showAdvent" title="Объявление №"> 
+		<div class = "closeDialog" ng-click="closePage(4)">OK</div>
+	</div>
+</div>

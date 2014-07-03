@@ -72,6 +72,8 @@ var Resources = function() {
             scope.models[name] = model;
 
             runCallback();
+        }, function() {
+            scope.models[name] = undefined;
         });
 	}
 

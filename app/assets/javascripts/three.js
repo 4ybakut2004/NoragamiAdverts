@@ -11956,7 +11956,6 @@ THREE.JSONLoader.prototype.loadAjaxJSON = function ( context, url, callback, tex
 			if ( xhr.status === 200 || xhr.status === 0 ) {
 
 				if ( xhr.responseText ) {
-					//console.log(xhr.responseText.replace(/;/, ""));
 
 					var json = JSON.parse( xhr.responseText.replace(/;\s*$/, "") );
 

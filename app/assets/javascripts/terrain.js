@@ -79,26 +79,28 @@ var Terrain = function(resources) {
 	function initTrees() {
 		for(var i = 0; i < treesCount * 2; i++) {
 			var treeNumber = getRandomInt(1, 4);
-			var tree = resources.models["tree" + treeNumber].clone();
-			tree.castShadow = true;
+			if (resources.models["tree" + treeNumber]) {
+				var tree = resources.models["tree" + treeNumber].clone();
+				tree.castShadow = true;
 
-			tree.scale.x = 0.06;
-			tree.scale.y = 0.06;
-			tree.scale.z = 0.06;
+				tree.scale.x = 0.06;
+				tree.scale.y = 0.06;
+				tree.scale.z = 0.06;
 
-			tree.position.y = -0.2;
-			tree.position.z = - (i % treesCount) * 1.2 / treesCount - 0.5;
+				tree.position.y = -0.2;
+				tree.position.z = - (i % treesCount) * 1.2 / treesCount - 0.5;
 
-			if(i < treesCount) {
-				tree.position.x = -0.45;
-				treesLeft.push(tree);
+				if(i < treesCount) {
+					tree.position.x = -0.45;
+					treesLeft.push(tree);
+				}
+				else {
+					tree.position.x = 0.45;
+					treesRight.push(tree);
+				}
+
+				object.add(tree);
 			}
-			else {
-				tree.position.x = 0.45;
-				treesRight.push(tree);
-			}
-
-			object.add(tree);
 		}
 	}
 	

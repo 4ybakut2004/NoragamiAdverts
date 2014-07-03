@@ -8,15 +8,17 @@ var Buildings = function(resources) {
 	init();
 
 	function init() {
-		temple = resources.models.temple;
-		temple.scale.x = temple.scale.y = temple.scale.z = 0.0022;
-		temple.position.z = -1.1;
-		temple.position.y = -0.24;
-		temple.position.x = 0.045;
-		temple.rotation.x = -3.14/1.98;
-		temple.castShadow = true;
+		if (resources.models.temple) {
+			temple = resources.models.temple;
+			temple.scale.x = temple.scale.y = temple.scale.z = 0.0022;
+			temple.position.z = -1.1;
+			temple.position.y = -0.24;
+			temple.position.x = 0.045;
+			temple.rotation.x = -3.14/1.98;
+			temple.castShadow = true;
 
-		object.add(temple);
+			object.add(temple);
+		}
 		
 		fence = getPanelWithMapHeight(6, 0.5, resources.textures.brick, 20, 1, 0x000000,resources.textures.brick_normal, resources.textures.brick_height);
 		fence.position.x = 0;

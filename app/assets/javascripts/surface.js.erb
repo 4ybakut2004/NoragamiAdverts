@@ -39,44 +39,44 @@ var Surface = function()
 		resources = new Resources();
 
 		// текстуры для скайбокса
-		resources.addTexture('assets/skybox/grimmnight_rt.jpg');
-		resources.addTexture('assets/skybox/grimmnight_lf.jpg');
-		resources.addTexture('assets/skybox/grimmnight_up.jpg');
-		resources.addTexture('assets/skybox/grimmnight_dn.jpg');
-		resources.addTexture('assets/skybox/grimmnight_bk.jpg');
-		resources.addTexture('assets/skybox/grimmnight_ft.jpg');
+		resources.addTexture("<%= asset_path 'skybox/grimmnight_rt.jpg' %>");
+		resources.addTexture("<%= asset_path 'skybox/grimmnight_lf.jpg' %>");
+		resources.addTexture("<%= asset_path 'skybox/grimmnight_up.jpg' %>");
+		resources.addTexture("<%= asset_path 'skybox/grimmnight_dn.jpg' %>");
+		resources.addTexture("<%= asset_path 'skybox/grimmnight_bk.jpg' %>");
+		resources.addTexture("<%= asset_path 'skybox/grimmnight_ft.jpg' %>");
 		
 		// текстуры для пола
-		resources.addTexture('assets/parallax/floor_trap.jpg');
-		resources.addTexture('assets/parallax/floor_trap_normal.jpg');
-		resources.addTexture('assets/parallax/floor_trap_height.jpg');
+		resources.addTexture("<%= asset_path 'parallax/floor_trap.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/floor_trap_normal.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/floor_trap_height.jpg' %>");
 		
-		resources.addTexture('assets/parallax/grass.jpg');
-		resources.addTexture('assets/parallax/grass_normal.jpg');
-		resources.addTexture('assets/parallax/grass_height.jpg');
+		resources.addTexture("<%= asset_path 'parallax/grass.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/grass_normal.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/grass_height.jpg' %>");
 
 		// Текстуры для досок с объявлениями
-		resources.addTexture('assets/parallax/wood.jpg');
-		resources.addTexture('assets/parallax/wood_normal.jpg');
-		resources.addTexture('assets/parallax/wood_height.jpg');
+		resources.addTexture("<%= asset_path 'parallax/wood.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/wood_normal.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/wood_height.jpg' %>");
 		
-		resources.addTexture('assets/tall.jpg');
-		resources.addTexture('assets/advert.jpg');
+		resources.addTexture("<%= asset_path 'tall.jpg' %>");
+		resources.addTexture("<%= asset_path 'advert.jpg' %>");
 
-		resources.addTexture('assets/parallax/brick.jpg');
-		resources.addTexture('assets/parallax/brick_normal.jpg');
-		resources.addTexture('assets/parallax/brick_height.jpg');
+		resources.addTexture("<%= asset_path 'parallax/brick.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/brick_normal.jpg' %>");
+		resources.addTexture("<%= asset_path 'parallax/brick_height.jpg' %>");
 
 		// модельки деревьев
-		resources.addModel('assets/trees/tree1.js');
-		resources.addModel('assets/trees/tree2.js');
-		resources.addModel('assets/trees/tree3.js');
-		resources.addModel('assets/trees/tree4.js');
+		resources.addModel("<%= asset_path 'trees/tree1.js' %>");
+		resources.addModel("<%= asset_path 'trees/tree2.js' %>");
+		resources.addModel("<%= asset_path 'trees/tree3.js' %>");
+		resources.addModel("<%= asset_path 'trees/tree4.js' %>");
 
 		// храм
-		resources.addModel('assets/temple/temple.js');
+		resources.addModel("<%= asset_path 'temple/temple.js' %>");
 
-		resources.addTexture('assets/spark.png');
+		resources.addTexture("<%= asset_path 'spark.png' %>");
 		
 		resources.load(function() {
 			init();

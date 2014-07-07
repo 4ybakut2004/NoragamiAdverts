@@ -1,10 +1,10 @@
 <div ng-app ng-controller="controlPage">
 	<div id = "downPanelControl">
 		<ul class = "panelButton">
-			<li ng-click="setPage(0)" title="Пополнить доску объявлений" class = "editting opacity07 opacityNo"></li>
-			<li ng-click="setPage(1)" title="Настройки" class = "addAdvent opacity07 opacityNo"></li>
-			<li ng-click="setPage(2)" title="Авторский состав" class = "avtor opacity07 opacityNo"></li>
-			<li ng-click="setPage(3)" title="Агитационный материал" class = "baner opacity07 opacityNo"></li>
+			<li ng-click="setPage(dialogs.addAdvent)" title="Пополнить доску объявлений" class = "editting opacity07 opacityNo"></li>
+			<li ng-click="setPage(dialogs.editting)" title="Настройки" class = "addAdvent opacity07 opacityNo"></li>
+			<li ng-click="setPage(dialogs.avtor)" title="Авторский состав" class = "avtor opacity07 opacityNo"></li>
+			<li ng-click="setPage(dialogs.baner)" title="Агитационный материал" class = "baner opacity07 opacityNo"></li>
 		</ul>
 	</div>
 	
@@ -12,10 +12,10 @@
 	<div id="editting" title="Настройки">
 		<p>Громкость:</p> 
 		<div id="slider-range-max"></div>
-		<div class = "closeDialog" ng-click="closePage(1)">OK</div>
+		<div class = "closeDialog" ng-click="closePage(dialogs.editting)">OK</div>
 	</div>
-	<div id="addAdvent" ng-show="showPage==0"> 
-		<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(0)"></button>
+	<div id="addAdvent" ng-show="showPage==dialogs.advent"> 
+		<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(dialogs.addAdvent)"></button>
 		<img src = "<%= asset_path 'design/photo.png' %>"/>
 		<div class = "panelAddAdvent rotation">
 			<div class = "panelAddAdventFon">
@@ -34,14 +34,14 @@
 	<div id="avtor" title="Про авторов"> 
 		<p>Сайт разработан специально для летней Фандомной битвы 2014 на dairy.ru командой <a href = "#">Noragami</a>.</p>
 		<p>Полный авторский состав будет представлен после деанона.</p>
-		<div class = "closeDialog" ng-click="closePage(2)">OK</div>
+		<div class = "closeDialog" ng-click="closePage(dialogs.avtor)">OK</div>
 	</div>
 	<div id="baner" title="Агитационный материал"> 
 		Тут будет баннер на нашу выкладку и на игру в отдельности.
-		<div class = "closeDialog" ng-click="closePage(3)">OK</div>
+		<div class = "closeDialog" ng-click="closePage(dialogs.baner)">OK</div>
 	</div>
 	<div id="showAdvent" title="Объявление №"> 
 		<img src = "<%= asset_path 'design/photo.png' %>"/>
-		<div class = "closeDialog" ng-click="closePage(4)">OK</div>
+		<div class = "closeDialog" ng-click="closePage(dialogs.showAdvent)">OK</div>
 	</div>
 </div>

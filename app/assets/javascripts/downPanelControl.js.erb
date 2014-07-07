@@ -8,7 +8,15 @@ function controlPage($scope){
 				  {id: '#editting', width: 300, height: 100, resizable: false, dialogClass: 'editting', opened: false},
 				  {id: '#avtor', width: 400, height: 130, resizable: false, dialogClass: 'avtor', opened: false},
 				  {id: '#baner', width: 300, height: 200, resizable: false, dialogClass: 'baner', opened: false}];
-				
+	
+	$scope.dialogs = {
+		addAdvent: 0,
+		editting: 1,
+		avtor: 2,
+		baner: 3,
+		showAdvent: 4
+	};
+
 	$scope.sound = new Sound(['./audio/end.ogg']);
 	$scope.sound.play();
 	$scope.sound.setVolume(1);

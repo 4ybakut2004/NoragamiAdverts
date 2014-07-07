@@ -195,7 +195,7 @@ var Board = function(resources) {
 	};
 
 	function createAdvert() {
-		var texture = resources.textures.advert.clone();
+		var texture = resources.textures.message_on_board.clone();
 		texture.needsUpdate = true;
 
 		var advert = getPanel(0.03, 0.06, texture, 1.0, 1.0);

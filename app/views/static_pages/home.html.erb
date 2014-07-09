@@ -1,4 +1,4 @@
-<div ng-app ng-controller="controlPage">
+<div ng-app="noragamiAdverts" ng-controller="controlPage">
 	<div id = "downPanelControl">
 		<ul class = "panelButton">
 			<li ng-click="setPage(dialogs.addAdvent)" title="Пополнить доску объявлений" class = "editting opacity07 opacityNo"></li>
@@ -22,13 +22,28 @@
 			</div>
 		</div>
 		<div class = "panelAddAdvent rotationNo">
-			<div class = "panelAddAdventFon">
-				<input style = "margin-top: 10px" class="tags" placeholder = "URL аватара">
-				<input class="tags" placeholder = "Автор">
-				<input class="tags" placeholder = "Заголовок">
-				<textarea class = "advent" placeholder = "Текст объявления..."></textarea>
-			</div>
-			<button id = "buttonAddAdvent" class="v-t opacity07 opacityNo"></button>
+			<form ng-submit="createAdvert()">
+				<div class = "panelAddAdventFon">
+					<div class="errorMessage" ng-show="newAvatarError">{{newAvatarError}}</div>
+					<input style = "margin-top: 10px"
+						class="tags"
+						placeholder = "URL аватара"
+						ng-model="newAvatar">
+					<div class="errorMessage" ng-show="newNickNameError">{{newNickNameError}}</div>
+					<input class="tags"
+						placeholder = "Автор"
+						ng-model="newNickName">
+					<div class="errorMessage" ng-show="newTitleError">{{newTitleError}}</div>
+					<input class="tags"
+						placeholder = "Заголовок"
+						ng-model="newTitle">
+					<div class="errorMessage" ng-show="newTextError">{{newTextError}}</div>
+					<textarea class = "advent"
+						placeholder = "Текст объявления..."
+						ng-model="newText"></textarea>
+				</div>
+				<button id = "buttonAddAdvent" class="v-t opacity07 opacityNo"></button>
+			</form>
 		</div>
 	</div>
 	<div id="avtor" title="Про авторов"> 

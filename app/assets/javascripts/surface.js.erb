@@ -3,19 +3,16 @@
 *	@max - верхняя граница
 *	@return - возвращает случайное число из интервала
 */
-var getRandomInt = function(min, max){
+function getRandomInt(min, max){
 	return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-var surface;												// объект класса Surface	
-var downPanelContol;										// объект класса управлением нижним меню
+}
 
 /**
  * Объект холста. Главный объект ThreeJS в данном приложении.
  * В нем происходит создание DOM элемента для отрисовки,
  * создание объектов мира, дальнейшая их отрисовка и обновление.
  */
-var Surface = function()
+var Surface = function(createCallback)
 {
 	var scene, camera, renderer;							// Экран, камера и рендер
 	var controls;											// Объект управления камерой
@@ -26,8 +23,10 @@ var Surface = function()
 	var temple;                                             // Храм
 	var ambientLight, spotLight;                            // Рассеянный свет
 	var boardsCtrl;                                         // Объект, управляющий досками объявлений
+	var callback = createCallback;                          // Функция, которая вызовется после создания холста
 
 	var firefiles;											// Объект класса светлячков
+	var self = this;
 	
 	loadResources();
 
@@ -80,7 +79,7 @@ var Surface = function()
 		
 		resources.load(function() {
 			init();
-			animate();
+			//self.animate();
 		});
 	}
 
@@ -97,13 +96,15 @@ var Surface = function()
 		addEventListeners();
 
 		prevTime = performance.now();
+
+		callback();
 	}
 
 	/**
 	*	Вызывается в цикле для отрисовки и изменения мира
 	*/
-	function animate() {
-		requestAnimationFrame( animate );
+	this.animate = function() {
+		requestAnimationFrame( self.animate );
 
 		modify();
 
@@ -117,7 +118,7 @@ var Surface = function()
 		prevTime = time;
 
 		renderer.render( scene, camera );
-	}
+	};
 
 	/**
 	*	Инициализация всего, что связано с камерой и управлением
@@ -225,8 +226,12 @@ var Surface = function()
 
 		renderer.setSize( window.innerWidth, window.innerHeight );
 	}
+
+	this.getBoardsCtrl = function() {
+		return boardsCtrl;
+	};
 };
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 	surface = new Surface();
-});
+});*/

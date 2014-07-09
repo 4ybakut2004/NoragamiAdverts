@@ -3,7 +3,24 @@
 * @nameAudio - название трека и путь к нему
 */
 
-function controlPage($scope){
+function controlPage($scope, Advert){
+	// Создаем трехмерный мир
+	$scope.surface = new Surface(function() {
+		$scope.addAdvertsAndAnimate();
+	});
+
+	$scope.addAdvertsAndAnimate = function() {
+		$scope.adverts = Advert.all();
+		$scope.adverts.$promise.then(function() {
+			angular.forEach($scope.adverts, function(advert) {
+				var boardsCtrl = $scope.surface.getBoardsCtrl();
+				boardsCtrl.addAdvert(advert);
+			});
+			$scope.surface.animate();
+		});
+	};
+
+	// Создаем обработку меню
 	$scope.nameDialog = [{id: '#addAdvent', width: 714, height: 356, resizable: false, dialogClass: 'addAdvent', opened: false},
 				  {id: '#editting', width: 300, height: 100, resizable: false, dialogClass: 'editting', opened: false},
 				  {id: '#avtor', width: 400, height: 130, resizable: false, dialogClass: 'avtor', opened: false},
@@ -22,33 +39,152 @@ function controlPage($scope){
 	$scope.sound.setVolume(1);
 	
 	$( "#slider-range-max" ).slider({
-	  range: "max",
-	  min: 0,
-	  max: 10,
-	  value: 1,
-	  slide: function( event, ui ) {
-		//ui.value - это значение будет устанавливаться громкостью
-		$scope.sound.setVolume(ui.value*0.1);
-	  }
+		range: "max",
+		min: 0,
+		max: 10,
+		value: 1,
+		slide: function( event, ui ) {
+			//ui.value - это значение будет устанавливаться громкостью
+			$scope.sound.setVolume(ui.value*0.1);
+		}
 	});
 	
 	$( document ).tooltip();
 		
-	$scope.setPage = function(param){
+	$scope.setPage = function(param) {
 		$( $scope.nameDialog[param].id ).dialog({width: $scope.nameDialog[param].width, height: $scope.nameDialog[param].height, resizable: $scope.nameDialog[param].resizable, dialogClass: $scope.nameDialog[param].dialogClass});
 		$scope.nameDialog[param].opened = true;
 		
 		angular.forEach($scope.nameDialog, function(dialog) {
-		  if(dialog.id != $scope.nameDialog[param].id && dialog.opened) {
-		  	$( dialog.id ).dialog('close');
-		  	dialog.opened = false;
-		  }
+			if(dialog.id != $scope.nameDialog[param].id && dialog.opened) {
+				$( dialog.id ).dialog('close');
+				dialog.opened = false;
+			}
 		});
-	}
+	};
 	
-	$scope.closePage = function(param){
+	$scope.closePage = function(param) {
 		$( $scope.nameDialog[param].id ).dialog('close');
-	}
+	};
+
+	// Вызываеется при попытке создать объявление
+	$scope.createAdvert = function() {
+		var attr = {};
+		attr.nickname = $scope.newNickName;
+		attr.avatar = $scope.newAvatar;
+		attr.title = $scope.newTitle;
+		attr.text = $scope.newText;
+
+		if($scope.validateNewAdvert()) {
+			var newAdvert = Advert.create(attr);
+			newAdvert.$promise.then($scope.createAdvertSuccess, $scope.createAdvertError);
+		}
+	};
+
+	$scope.createAdvertSuccess = function() {
+		$scope.surface.getBoardsCtrl().addAdvert();
+
+		$($scope.nameDialog[$scope.dialogs.addAdvent].id).dialog('close');
+
+		$scope.resetNewAdvert();
+	};
+
+	$scope.resetNewAdvert = function() {
+		$scope.newNickName = "";
+		$scope.newAvatar = "";
+		$scope.newTitle = "";
+		$scope.newText = "";
+
+		$scope.newNickNameError = "";
+		$scope.newAvatarError = "";
+		$scope.newTitleError = "";
+		$scope.newTextError = "";
+	};
+
+	$scope.resetNewAdvert();
+
+	$scope.createAdvertError = function(d) {
+		console.log("Ошибка во время создания объявления");
+	};
+
+	$scope.validateNewAdvert = function() {
+		var nickname = $scope.validateNewNickName();
+		var avatar = $scope.validateNewAvatar();
+		var title = $scope.validateNewTitle();
+		var text = $scope.validateNewText();
+
+		return nickname && avatar && title && text;
+	};
+
+	$scope.validateNewNickName = function() {
+		var result = $scope.newNickName != null &&
+					 $scope.newNickName != undefined &&
+					 $scope.newNickName != "" &&
+					 $scope.newNickName.length <= 50;
+
+		if(!result) {
+			$scope.newNickNameError = "Имя должно быть введено и не должно превышать 50 символов";
+		} else {
+			$scope.newNickNameError = "";
+		}
+
+		return result;
+	};
+
+	$scope.validateNewAvatar = function() {
+		var result = $scope.newAvatar.length <= 255;
+
+		if(!result) {
+			$scope.newAvatarError = "Ссылка не должна превышать 255 символов";
+		} else {
+			$scope.newAvatarError = "";
+		}
+
+		return result;
+	};
+
+	$scope.validateNewTitle = function() {
+		var result = $scope.newTitle.length <= 50;
+
+		if(!result) {
+			$scope.newTitleError = "Заголовок не должен превышать 50 символов";
+		} else {
+			$scope.newTitleError = "";
+		}
+
+		return result;
+	};
+
+	$scope.validateNewText = function() {
+		var result = $scope.newText != null &&
+					 $scope.newText != undefined &&
+					 $scope.newText != "" &&
+					 $scope.newText.length <= 300;
+
+		if(!result) {
+			$scope.newTextError = "Текст должен быть введен и не должен превышать 300 символов";
+		} else {
+			$scope.newTextError = "";
+		}
+
+		return result;
+	};
+
+	$scope.$watch('newNickName', function() {
+		$scope.newNickNameError = "";
+	});
+
+	$scope.$watch('newTitle', function() {
+		$scope.newTitleError = "";
+	});
+
+	$scope.$watch('newAvatar', function() {
+		$scope.newAvatarError = "";
+	});
+
+	$scope.$watch('newText', function() {
+		$scope.newTextError = "";
+	});
 }
 
-controlPage.$inject = ['$scope'];
+controlPage.$inject = ['$scope', 'Advert'];

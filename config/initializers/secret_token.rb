@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-NoragamiAdverts::Application.config.secret_key_base = 'ea1b98302d1411cfa2ed145c47503af68472246c3f4bea4a90a94f8ad011526768cf90885c0974f809ca3886352299473c1e4cb946464dfb7e61282b6801149b'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+NoragamiAdverts::Application.config.secret_key_base = secure_token

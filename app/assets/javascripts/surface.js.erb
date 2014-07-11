@@ -28,7 +28,10 @@ var Surface = function(createCallback)
 	var firefiles;											// Объект класса светлячков
 	var self = this;
 	var drawing = true;
-	
+
+	var mouse = new THREE.Vector2();
+	var projector;
+
 	loadResources();
 
 	/**
@@ -97,6 +100,7 @@ var Surface = function(createCallback)
 		addEventListeners();
 
 		prevTime = performance.now();
+		projector = new THREE.Projector();
 
 		callback();
 	}
@@ -222,6 +226,8 @@ var Surface = function(createCallback)
 
 	function addEventListeners() {
 		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		window.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	}
 
 	// Настраиваем камеру в зависимости от размера страницы
@@ -230,6 +236,27 @@ var Surface = function(createCallback)
 		camera.updateProjectionMatrix();
 
 		renderer.setSize( window.innerWidth, window.innerHeight );
+	}
+
+
+	function onDocumentMouseMove(event) {
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+		var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+		projector.unprojectVector( vector, camera );
+
+		var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+		boardsCtrl.onDocumentMouseMove(raycaster);
+	}
+
+	function onDocumentMouseDown(event) {
+		event.preventDefault();
+
+		boardsCtrl.onDocumentMouseDown();
 	}
 
 	this.getBoardsCtrl = function() {

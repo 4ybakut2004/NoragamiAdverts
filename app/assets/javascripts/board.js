@@ -204,6 +204,22 @@ var Board = function(resources) {
 		return advert;
 	}
 
+	this.onDocumentMouseMove = function(raycaster) {
+		var intersects = raycaster.intersectObjects(adverts);
+		var intersectObject;
+
+		if(intersects.length > 0) {
+			intersects[0].object.material.color = new THREE.Color(0.5, 1.0, 0.5);
+			intersectObject = intersects[0].object;
+		} else {
+			for(var i = 0; i < adverts.length; i++) {
+				adverts[i].material.color = new THREE.Color(1.0, 1.0, 1.0);
+			}
+		}
+
+		return intersectObject;
+	};
+
 	this.getObject = function() {
 		return object;
 	};

@@ -5,6 +5,7 @@ var BoardsController = function(resources) {
 	var boardLeft, boardRight;      // доски с объявлениями
 	var advertsCount = 0;
 	var advertsOnBoard = 5;
+	var overingAdvert;
 
 	init();
 
@@ -52,4 +53,26 @@ var BoardsController = function(resources) {
 		}
 	};
 
+	this.onDocumentMouseMove = function(raycaster) {
+		var advert = boardLeft.onDocumentMouseMove(raycaster);
+		if(advert === undefined) {
+			advert = boardRight.onDocumentMouseMove(raycaster);
+		}
+		
+		if (advert !== undefined) {
+			overingAdvert = advert;
+			$('body').css({cursor: 'pointer'});
+		} else {
+			overingAdvert = undefined;
+			$('body').css({cursor: 'auto'});
+		}
+	};
+
+	this.onDocumentMouseDown = function() {
+		if(overingAdvert === undefined) {
+			console.log("Не нашлось объявления");
+		} else {
+			console.log("Объвяление нашлось");
+		}
+	};
 };

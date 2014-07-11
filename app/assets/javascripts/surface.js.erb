@@ -27,6 +27,7 @@ var Surface = function(createCallback)
 
 	var firefiles;											// Объект класса светлячков
 	var self = this;
+	var drawing = true;
 	
 	loadResources();
 
@@ -113,11 +114,15 @@ var Surface = function(createCallback)
 		var delta = ( time - prevTime ) / 1000;
 
 		// Смещаем объекты на расстояние, зависящее от delta
-		update(delta);
+		if(drawing) {
+			update(delta);
+		}
 
 		prevTime = time;
 
-		renderer.render( scene, camera );
+		if(drawing) {
+			renderer.render( scene, camera );
+		}
 	};
 
 	/**
@@ -230,8 +235,12 @@ var Surface = function(createCallback)
 	this.getBoardsCtrl = function() {
 		return boardsCtrl;
 	};
-};
 
-/*$(document).ready(function(){
-	surface = new Surface();
-});*/
+	this.stop = function() {
+		drawing = false;
+	};
+
+	this.start = function() {
+		drawing = true;
+	};
+};

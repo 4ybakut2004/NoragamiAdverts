@@ -1,6 +1,6 @@
 noragamiAdverts.factory('Advert', ['$resource', function($resource) {
   function Advert() {
-    this.service = $resource('/adverts/:advertId.json',
+    this.service = $resource('/notices/:advertId.json',
                              {advertId: '@id'});
   }
 

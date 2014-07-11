@@ -21,10 +21,10 @@ function controlPage($scope, Advert){
 	};
 
 	// Создаем обработку меню
-	$scope.nameDialog = [{id: '#addAdvent', width: 714, height: 356, resizable: false, dialogClass: 'addAdvent', opened: false},
-				  {id: '#editting', width: 300, height: 100, resizable: false, dialogClass: 'editting', opened: false},
-				  {id: '#avtor', width: 400, height: 130, resizable: false, dialogClass: 'avtor', opened: false},
-				  {id: '#baner', width: 300, height: 200, resizable: false, dialogClass: 'baner', opened: false}];
+	$scope.nameDialog = [{id: '#addAdvent', width: 714, height: 356, resizable: false, dialogClass: 'addAdventWidget', opened: false},
+				  {id: '#editting', width: 423, height: 170, resizable: false, dialogClass: 'edittingWidget', opened: false},
+				  {id: '#avtor', width: 400, height: 130, resizable: false, dialogClass: 'avtorWidget', opened: false},
+				  {id: '#baner', width: 300, height: 200, resizable: false, dialogClass: 'banerWidget', opened: false}];
 	
 	$scope.dialogs = {
 		addAdvent: 0,
@@ -37,6 +37,7 @@ function controlPage($scope, Advert){
 	$scope.sound = new Sound(['./audio/end.ogg']);
 	$scope.sound.play();
 	$scope.sound.setVolume(1);
+	$scope.imgFlag = -1;
 	
 	$( "#slider-range-max" ).slider({
 		range: "max",
@@ -52,8 +53,10 @@ function controlPage($scope, Advert){
 	$( document ).tooltip();
 		
 	$scope.setPage = function(param) {
-		$( $scope.nameDialog[param].id ).dialog({width: $scope.nameDialog[param].width, height: $scope.nameDialog[param].height, resizable: $scope.nameDialog[param].resizable, dialogClass: $scope.nameDialog[param].dialogClass});
+		$( $scope.nameDialog[param].id ).dialog({width: $scope.nameDialog[param].width, height: $scope.nameDialog[param].height, resizable: $scope.nameDialog[param].resizable, dialogClass: $scope.nameDialog[param].dialogClass, closeOnEscape: false});
 		$scope.nameDialog[param].opened = true;
+
+		$scope.imgFlag = param;
 		
 		angular.forEach($scope.nameDialog, function(dialog) {
 			if(dialog.id != $scope.nameDialog[param].id && dialog.opened) {
@@ -61,10 +64,14 @@ function controlPage($scope, Advert){
 				dialog.opened = false;
 			}
 		});
+
+		$scope.surface.stop();
 	};
 	
 	$scope.closePage = function(param) {
 		$( $scope.nameDialog[param].id ).dialog('close');
+		$scope.imgFlag = -1;
+		$scope.surface.start();
 	};
 
 	// Вызываеется при попытке создать объявление
@@ -87,6 +94,8 @@ function controlPage($scope, Advert){
 		$($scope.nameDialog[$scope.dialogs.addAdvent].id).dialog('close');
 
 		$scope.resetNewAdvert();
+
+		$scope.surface.start();
 	};
 
 	$scope.resetNewAdvert = function() {

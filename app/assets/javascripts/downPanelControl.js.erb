@@ -83,15 +83,16 @@ function controlPage($scope, Advert){
 		attr.text = $scope.newText;
 
 		if($scope.validateNewAdvert()) {
-			var newAdvert = Advert.create(attr);
-			newAdvert.$promise.then($scope.createAdvertSuccess, $scope.createAdvertError);
+			$scope.newAdvert = Advert.create(attr);
+			$scope.newAdvert.$promise.then($scope.createAdvertSuccess, $scope.createAdvertError);
 		}
 	};
 
 	$scope.createAdvertSuccess = function() {
-		$scope.surface.getBoardsCtrl().addAdvert();
+		$scope.surface.getBoardsCtrl().addAdvert($scope.newAdvert);
 
 		$($scope.nameDialog[$scope.dialogs.addAdvent].id).dialog('close');
+		$scope.imgFlag = -1;
 
 		$scope.resetNewAdvert();
 

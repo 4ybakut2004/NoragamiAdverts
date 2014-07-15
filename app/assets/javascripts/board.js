@@ -157,38 +157,47 @@ var Board = function(resources) {
 		return circle;
 	}
 	
-	this.addAdvert = function() {
+	this.addAdvert = function(options) {
 		// Достаем количество объявлений
 		var advertsCount = adverts.length;
 		// Смотрим, сколько максимум
 		var maxAdverts = advertsPositions.length;
 
 		var coords;
+		var deleted;
+		var advert = {
+			object: undefined,
+			info: undefined
+		};
 
 		// Создаем объявляшку
-		var advert = createAdvert();
-		var deleted;
+		if(options.object) {
+			advert.object = options.object;
+		} else {
+			advert.object = createAdvert();
+		}
+		advert.info = options.info;
 
 		// Если доска переполнена, отрываем старое объявление и смещаем все в его сторону
 		if(advertsCount >= maxAdverts) {
 			deleted = adverts.shift();
-			object.remove(deleted);
+			object.remove(deleted.object);
 			advertsCount--;
 
 			// Смещаем объвяления
 			for(var i = 0; i < advertsCount; i++) {
-				adverts[i].position.x = advertsPositions[i].x;
-				adverts[i].position.y = advertsPositions[i].y;
-				adverts[i].position.z = advertsPositions[i].z;
+				adverts[i].object.position.x = advertsPositions[i].x;
+				adverts[i].object.position.y = advertsPositions[i].y;
+				adverts[i].object.position.z = advertsPositions[i].z;
 			}
 		}
 
 		// Настраиваем координаты объявления
-		advert.position.x = advertsPositions[advertsCount].x;
-		advert.position.y = advertsPositions[advertsCount].y;
-		advert.position.z = advertsPositions[advertsCount].z;
+		advert.object.position.x = advertsPositions[advertsCount].x;
+		advert.object.position.y = advertsPositions[advertsCount].y;
+		advert.object.position.z = advertsPositions[advertsCount].z;
 
-		object.add(advert);
+		object.add(advert.object);
 		adverts.push(advert);
 
 		return deleted;
@@ -205,7 +214,12 @@ var Board = function(resources) {
 	}
 
 	this.onDocumentMouseMove = function(raycaster) {
-		var intersects = raycaster.intersectObjects(adverts);
+		var objects = [];
+		for(var i = 0; i < adverts.length; i++) {
+			objects.push(adverts[i].object);
+		}
+
+		var intersects = raycaster.intersectObjects(objects);
 		var intersectObject;
 
 		if(intersects.length > 0) {
@@ -213,7 +227,13 @@ var Board = function(resources) {
 			intersectObject = intersects[0].object;
 		} else {
 			for(var i = 0; i < adverts.length; i++) {
-				adverts[i].material.color = new THREE.Color(1.0, 1.0, 1.0);
+				adverts[i].object.material.color = new THREE.Color(1.0, 1.0, 1.0);
+			}
+		}
+
+		for(var i = 0; i < adverts.length; i++) {
+			if(adverts[i].object == intersectObject) {
+				intersectObject = adverts[i].info;
 			}
 		}
 

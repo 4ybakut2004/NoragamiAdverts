@@ -254,9 +254,8 @@ var Surface = function(createCallback)
 	}
 
 	function onDocumentMouseDown(event) {
-		event.preventDefault();
-
-		boardsCtrl.onDocumentMouseDown();
+		var advert = boardsCtrl.onDocumentMouseDown();
+		console.log(advert);
 	}
 
 	this.getBoardsCtrl = function() {

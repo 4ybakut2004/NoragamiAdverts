@@ -34,17 +34,17 @@ var BoardsController = function(resources) {
 		return object;
 	};
 
-	this.addAdvert = function() {
+	this.addAdvert = function(advert) {
 		if(advertsCount < advertsOnBoard) {
-			boardLeft.addAdvert();
+			boardLeft.addAdvert({info: advert});
 		}
 
 		if(advertsCount >= advertsOnBoard && advertsCount < advertsOnBoard * 2) {
-			boardRight.addAdvert();
+			boardRight.addAdvert({info: advert});
 		}
 
 		if(advertsCount == advertsOnBoard * 2) {
-			var oldAdvert = boardRight.addAdvert();
+			var oldAdvert = boardRight.addAdvert({info: advert});
 			boardLeft.addAdvert(oldAdvert);
 		}
 
@@ -69,10 +69,6 @@ var BoardsController = function(resources) {
 	};
 
 	this.onDocumentMouseDown = function() {
-		if(overingAdvert === undefined) {
-			console.log("Не нашлось объявления");
-		} else {
-			console.log("Объвяление нашлось");
-		}
+		return overingAdvert;
 	};
 };

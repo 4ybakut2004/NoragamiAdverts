@@ -222,13 +222,13 @@ var Board = function(resources) {
 		var intersects = raycaster.intersectObjects(objects);
 		var intersectObject;
 
+		for(var i = 0; i < adverts.length; i++) {
+			adverts[i].object.material.color = new THREE.Color(1.0, 1.0, 1.0);
+		}
+
 		if(intersects.length > 0) {
 			intersects[0].object.material.color = new THREE.Color(0.5, 1.0, 0.5);
 			intersectObject = intersects[0].object;
-		} else {
-			for(var i = 0; i < adverts.length; i++) {
-				adverts[i].object.material.color = new THREE.Color(1.0, 1.0, 1.0);
-			}
 		}
 
 		for(var i = 0; i < adverts.length; i++) {

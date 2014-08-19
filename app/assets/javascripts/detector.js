@@ -6,7 +6,7 @@
 var Detector = {
 
 	canvas: !! window.CanvasRenderingContext2D,
-	webgl: ( function () { try { return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); } catch( e ) { return false; } } )(),
+	webgl: ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )(),
 	workers: !! window.Worker,
 	fileapi: window.File && window.FileReader && window.FileList && window.Blob,
 
@@ -20,18 +20,18 @@ var Detector = {
 		element.style.textAlign = 'center';
 		element.style.background = '#fff';
 		element.style.color = '#000';
-		//element.style.padding = '1.5em';
+		element.style.padding = '1.5em';
 		element.style.width = '400px';
-		element.style.margin = 'auto auto';
+		element.style.margin = '5em auto 0';
 
 		if ( ! this.webgl ) {
 
 			element.innerHTML = window.WebGLRenderingContext ? [
-				'Your graphics card does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br />',
-				'Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'
+				'Ваша видеокарта не поддерживает <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br />',
+				'Проверить его доступность можно <a href="http://get.webgl.org/" style="color:#000">здесь</a>.'
 			].join( '\n' ) : [
-				'Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br/>',
-				'Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'
+				'Ваш браузер не поддерживает <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br/>',
+				'Проверить его доступность можно <a href="http://get.webgl.org/" style="color:#000">здесь</a>.'
 			].join( '\n' );
 
 		}

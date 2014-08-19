@@ -4,9 +4,15 @@
 */
 
 function controlPage($scope, Advert){
+	// Проверяем доступность джееля
+	if (!Detector.webgl) {
+		Detector.addGetWebGLMessage();
+		return;
+	}
 	// Создаем трехмерный мир
 	$scope.surface = new Surface(function() {
 		$scope.addAdvertsAndAnimate();
+		$scope.surface.scope = $scope;
 	});
 
 	$scope.addAdvertsAndAnimate = function() {
@@ -21,11 +27,12 @@ function controlPage($scope, Advert){
 	};
 
 	// Создаем обработку меню
-	$scope.nameDialog = [{id: '#addAdvent', width: 714, height: 356, resizable: false, dialogClass: 'addAdventWidget', opened: false},
-				  {id: '#editting', width: 423, height: 170, resizable: false, dialogClass: 'edittingWidget', opened: false},
-				  {id: '#avtor', width: 400, height: 130, resizable: false, dialogClass: 'avtorWidget', opened: false},
-				  {id: '#baner', width: 300, height: 200, resizable: false, dialogClass: 'banerWidget', opened: false}];
-	
+	$scope.nameDialog = [{id: '#addAdvent', width: 451, height: 397, resizable: false, dialogClass: 'addAdventWidget', opened: false},
+				  {id: '#editting', width: 451, height: 397, resizable: false, dialogClass: 'edittingWidget', opened: false},
+				  {id: '#avtor', width: 451, height: 397, resizable: false, dialogClass: 'avtorWidget', opened: false},
+				  {id: '#baner', width: 451, height: 397, resizable: false, dialogClass: 'banerWidget', opened: false},
+				  {id: '#showAdvent', width: 451, height: 397, resizable: false, dialogClass: 'showAdventWidget', opened: false}];
+
 	$scope.dialogs = {
 		addAdvent: 0,
 		editting: 1,
@@ -79,7 +86,6 @@ function controlPage($scope, Advert){
 		var attr = {};
 		attr.nickname = $scope.newNickName;
 		attr.avatar = $scope.newAvatar;
-		attr.title = $scope.newTitle;
 		attr.text = $scope.newText;
 
 		if($scope.validateNewAdvert()) {
@@ -102,12 +108,10 @@ function controlPage($scope, Advert){
 	$scope.resetNewAdvert = function() {
 		$scope.newNickName = "";
 		$scope.newAvatar = "";
-		$scope.newTitle = "";
 		$scope.newText = "";
 
 		$scope.newNickNameError = "";
 		$scope.newAvatarError = "";
-		$scope.newTitleError = "";
 		$scope.newTextError = "";
 	};
 
@@ -120,10 +124,9 @@ function controlPage($scope, Advert){
 	$scope.validateNewAdvert = function() {
 		var nickname = $scope.validateNewNickName();
 		var avatar = $scope.validateNewAvatar();
-		var title = $scope.validateNewTitle();
 		var text = $scope.validateNewText();
 
-		return nickname && avatar && title && text;
+		return nickname && avatar && text;
 	};
 
 	$scope.validateNewNickName = function() {
@@ -153,28 +156,19 @@ function controlPage($scope, Advert){
 		return result;
 	};
 
-	$scope.validateNewTitle = function() {
-		var result = $scope.newTitle.length <= 50;
-
-		if(!result) {
-			$scope.newTitleError = "Заголовок не должен превышать 50 символов";
-		} else {
-			$scope.newTitleError = "";
-		}
-
-		return result;
-	};
-
 	$scope.validateNewText = function() {
-		var result = $scope.newText != null &&
-					 $scope.newText != undefined &&
-					 $scope.newText != "" &&
-					 $scope.newText.length <= 300;
+		var isNull = $scope.newText == null || $scope.newText == undefined || $scope.newText == "";
+		var tooLong = $scope.newText.length > 240;
+		var result = !isNull && !tooLong;
 
-		if(!result) {
-			$scope.newTextError = "Текст должен быть введен и не должен превышать 300 символов";
+		if(tooLong) {
+			$scope.newTextError = "Ошибка! Длина сообщения больше 240 символов.";
 		} else {
-			$scope.newTextError = "";
+			if(isNull) {
+				$scope.newTextError = "Ошибка! Введите текст объявления.";
+			} else {
+				$scope.newTextError = "";
+			}
 		}
 
 		return result;
@@ -184,10 +178,6 @@ function controlPage($scope, Advert){
 		$scope.newNickNameError = "";
 	});
 
-	$scope.$watch('newTitle', function() {
-		$scope.newTitleError = "";
-	});
-
 	$scope.$watch('newAvatar', function() {
 		$scope.newAvatarError = "";
 	});
@@ -195,6 +185,28 @@ function controlPage($scope, Advert){
 	$scope.$watch('newText', function() {
 		$scope.newTextError = "";
 	});
+
+	$scope.getFirstError = function() {
+		var error = "";
+		if($scope.newTextError) {
+			error = $scope.newTextError;
+		}
+		if($scope.newNickNameError) {
+			error = $scope.newNickNameError;
+		}
+		if($scope.newAvatarError) {
+			error = $scope.newAvatarError;
+		}
+		return error;
+	};
+
+	$scope.setAdvertText = function(text) {
+		$scope.advertText = text;
+	};
+
+	$scope.setAdvertNickName = function(nickName) {
+		$scope.advertNickName = nickName;
+	}
 }
 
 controlPage.$inject = ['$scope', 'Advert'];

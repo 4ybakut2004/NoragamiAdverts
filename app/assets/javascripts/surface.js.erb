@@ -255,7 +255,12 @@ var Surface = function(createCallback)
 
 	function onDocumentMouseDown(event) {
 		var advert = boardsCtrl.onDocumentMouseDown();
-		console.log(advert);
+		if(advert) {
+			console.log(advert);
+			self.scope.setAdvertText(advert.text);
+			self.scope.setAdvertNickName(advert.nickname);
+			self.scope.setPage(4);
+		}
 	}
 
 	this.getBoardsCtrl = function() {

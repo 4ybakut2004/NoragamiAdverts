@@ -1,3 +1,4 @@
+/*url(<%= asset_path 'design/menu.png' %>)*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -25,7 +26,8 @@ body{
   height: 100%;
   min-width: 800px;
   background: #000;
-  font-size: 12px
+  font-size: 12px;
+  font-family: cursive;
 }
 
 canvas{  
@@ -40,50 +42,38 @@ canvas{
 	background: rgba( 180, 163, 144, 0.4);
 }
 
-.addAdventWidget.ui-widget-content, .edittingWidget.ui-widget-content{
+.addAdventWidget.ui-widget-content, .edittingWidget.ui-widget-content, .avtorWidget.ui-widget-content, .banerWidget.ui-widget-content, .showAdventWidget.ui-widget-content{
 	background: transparent !important;
 	outline: 0;
 	border: 0;
-}
-
-.ui-dialog .ui-dialog-content{
-	padding: 40px 40px !important;
 }
 
 .ui-dialog-titlebar {display: none;}
 
 #downPanelControl{
 	background: url(<%= asset_path 'design/menu.png' %>) no-repeat;
-	width: 427px;
-	height: 70px;
+	width: 401px;
+	height: 58px;
 	position: absolute;
 	bottom: 0px;
-	margin:-50px 0 0 -213px;
+	margin:-50px 0 0 -199px;
 	left:50%;
 }
 
 #editting, #addAdvent, #avtor, #baner, #showAdvent{
 	display: none;
-}
-
-#addAdvent{
 	background: url(<%= asset_path 'design/board.png' %>) no-repeat;
-}
-
-#addAdvent img{
-	width: 121px;
-	position: absolute;
-	top: 100px;
-	left: 70px;
-	z-index: 2;
+	padding: 10px 20px;
+	box-sizing: border-box;
 }
 
 #addAdvent textarea{
-	width: 380px;
+	width: 300px;
 	resize: none;
-	height: 40px;
+	height: 120px;
 	font-size: 12px;
 	padding-top: 3px !important;
+	padding-right: 60px !important;
 }
 
 #buttonCansel{
@@ -92,42 +82,55 @@ canvas{
 	border: 0;
 	outline: 0;
 	position: absolute;
-	right: 12px;
-	top: 12px;
+	right: 25px;
+	top: 25px;
 	background: url(<%= asset_path 'design/close.png' %>) no-repeat;
 }
 
 #buttonAddAdvent{
-	width: 88px;
-	height: 25px;
+	width: 64px;
+	height: 62px;
 	border: 0;
 	outline: 0;
 	position: absolute;
 	left: 200px;
 	bottom: 5px;
-	background: url(<%= asset_path 'design/send.png' %>) no-repeat;
+	background: url(<%= asset_path 'design/ok.png' %>) 0 0 no-repeat;
+}
+
+#buttonAddAdvent:hover{background: url(<%= asset_path 'design/ok.png' %>) 0 -62px no-repeat; cursor: pointer;}
+
+.yato{
+	width: 132px;
+	height: 172px;
+	border: 0;
+	outline: 0;
+	position: absolute;
+	right: 25px;
+	bottom: 30px;
+	background: url(<%= asset_path 'design/yato.png' %>) no-repeat;
 }
 
 .tags{
-	width: 380px;
+	width: 300px;
 	height: 25px;
 }
 
-#addAdvent textarea, .tags{background: #eee5d6;}
+#addAdvent textarea, .tags{background: #f9f7ec; border: 1px solid #D1C7C4; font-family: cursive; font-size: 14px;}
 
-.tags::-webkit-input-placeholder{color: #887f75;}
-.tags:-moz-placeholder{color: #887f75;}
-.tags::-moz-placeholder{color: #887f75;}
-.tags:-ms-input-placeholder{color: #887f75;}
-#addAdvent textarea::-webkit-input-placeholder{color: #887f75; font-size: 12px}
-#addAdvent textarea:-moz-placeholder{color: #887f75; font-size: 12px}
-#addAdvent textarea::-moz-placeholder{color: #887f75; font-size: 12px}
-#addAdvent textarea:-ms-input-placeholder{color: #887f75; font-size: 12px}
+.tags::-webkit-input-placeholder{color: #887f75; font-family: cursive;}
+.tags:-moz-placeholder{color: #887f75; font-family: cursive;}
+.tags::-moz-placeholder{color: #887f75; font-family: cursive;}
+.tags:-ms-input-placeholder{color: #887f75; font-family: cursive;}
+#addAdvent textarea::-webkit-input-placeholder{color: #887f75; font-size: 14px; font-family: cursive;}
+#addAdvent textarea:-moz-placeholder{color: #887f75; font-size: 14px; font-family: cursive;}
+#addAdvent textarea::-moz-placeholder{color: #887f75; font-size: 14px; font-family: cursive;}
+#addAdvent textarea:-ms-input-placeholder{color: #887f75; font-size: 14px; font-family: cursive;}
 
 .panelButton{
-	width: 300px;
+	width: 260px;
 	margin: 0px auto;
-	margin-top: 15px;
+	margin-top: 12px;
 }
 
 .panelButton li.opacityNo:hover, .v-t.opacity07:hover, .closeDialog.opacity07:hover{
@@ -149,58 +152,27 @@ canvas{
 }
 
 .panelButton li{
-	margin-right: 5px;
-	width: 70px;
-	height: 55px;
+	margin-right: 20px;
+	width: 43px;
+	height: 40px;
 	float: left;
 	list-style-type: none;
 	cursor: pointer;
 }
 
-.addAdvent{background: url(<%= asset_path 'design/buttons.png' %>) -70px 0px no-repeat;}
+.addAdvent{background: url(<%= asset_path 'design/buttons.png' %>) -43px 0px no-repeat;}
 .editting{background: url(<%= asset_path 'design/buttons.png' %>) 0px 0px no-repeat;}
-.avtor{background: url(<%= asset_path 'design/buttons.png' %>) -140px 0px no-repeat;}
-.baner{background: url(<%= asset_path 'design/buttons.png' %>) -210px 0px no-repeat;}
+.avtor{background: url(<%= asset_path 'design/buttons.png' %>) -86px 0px no-repeat;}
+.baner{background: url(<%= asset_path 'design/buttons.png' %>) -129px 0px no-repeat;}
 
-.addAdvent:hover, .addAdvent.img{background: url(<%= asset_path 'design/buttons.png' %>) -70px -55px no-repeat;}
-.editting:hover, .editting.img{background: url(<%= asset_path 'design/buttons.png' %>) 0px -55px no-repeat;}
-.avtor:hover, .avtor.img{background: url(<%= asset_path 'design/buttons.png' %>) -140px -55px no-repeat;}
-.baner:hover, .baner.img{background: url(<%= asset_path 'design/buttons.png' %>) -210px -55px no-repeat;}
+.addAdvent:hover, .addAdvent.img{background: url(<%= asset_path 'design/buttons.png' %>) -43px -40px no-repeat;}
+.editting:hover, .editting.img{background: url(<%= asset_path 'design/buttons.png' %>) 0px -40px no-repeat;}
+.avtor:hover, .avtor.img{background: url(<%= asset_path 'design/buttons.png' %>) -86px -40px no-repeat;}
+.baner:hover, .baner.img{background: url(<%= asset_path 'design/buttons.png' %>) -129px -40px no-repeat;}
 
-#slider-range-max{ margin: 10px 0px;}
-
-.panelAddAdvent{
-	width: 450px;
-	height: 200px;
-	background: url(<%= asset_path 'design/form.png' %>);
-	border: 2px solid #4d3710;
-	-moz-box-shadow: 5px 4px 8px rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 5px 4px 8px rgba(0, 0, 0, 0.5);
-    box-shadow: 5px 4px 8px rgba(0, 0, 0, 0.5);
-	margin-left: 160px;
-	margin-top: 50px;
-	position: absolute
-}
-
-.panelAddAdventFon{
-	width: 400px;
-	height: 150px;
-	background: #dfd0b9;
-	border: 2px solid #4d3710;
-	margin-top: 15px;
-	margin-left: 25px;
-}
-
-.panelAddAdvent.rotation{
-	-webkit-transform: rotate(5deg); /* Chrome y Safari */
-	-moz-transform: rotate(5deg); /* Firefox */
-	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* Internet Explorer */
-	-o-transform: rotate(5deg); /* Opera */
-}
-
-.panelAddAdvent.rotationNo{
-	top: 15px;
-	left: 10px;
+#slider-range-max{ 
+	margin-right: 40px;
+	margin-top: 10px;
 }
 
 #addAdvent .panelAddAdventFon *{
@@ -208,34 +180,68 @@ canvas{
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 	border: 0;
-	margin: 2px 10px;
+	margin: 5px 10px;
 	padding: 0 5px;
 	outline: 0;
 }
 
-.whitePanel{
-	width: 100%;
-	height: 100%;
-	background: url(<%= asset_path 'design/square.png' %>);
-	padding: 10px;
-	-webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-#editting{
-	background: url(<%= asset_path 'design/tex.png' %>);
-}
-
-.closeDialog{
-	background: url(<%= asset_path 'design/close_button.png' %>);
-	width: 84px;
-	height: 21px;
-	cursor: pointer;
-	margin: 0 auto;
-	margin-top: 10px;
-}
-
 p{
-	font-size: 12px;
+	font-size: 16px; 
+	color: #523f2d;
+}
+
+.headAdvent{
+	width: 186px;
+	height: 35px;
+	background: url(<%= asset_path 'design/addMessage.png' %>);
+	margin-left: 50px !important;
+}
+
+#addAdvent img{
+	float: left;
+	margin-top: -1px !important;
+}
+
+.panelAddAdventFon{margin: 50px;}
+
+#editting .whitePanel{margin: 90px 70px;}
+#baner  .whitePanel{padding: 55px 20px 0px 54px;}
+#showAdvent .whitePanel {margin: 85px 50px 20px 50px;}
+
+.textarea1{width: 120px;  resize: none; height: 20px}
+.textarea2{width: 120px;  resize: none; height: 20px}
+
+.error{
+	width: 150px;
+	background: #e6d7ce;
+	position: absolute;
+	right: 30px;
+	bottom: 65px;
+	border: 1px solid #A8A0A0;
+	border-radius: 20px;
+	color: #88a548;
+	text-align: center;
+	font-size: 14px;
+	padding: 8px;
+	font-family: cursive;
+	word-wrap: break-word;
+}
+
+.error.nickName{
+	left: 100px;
+	bottom: 95px;
+}
+
+#showAdvent img{
+	margin-right: 20px;
+	float: left;
+}
+
+#showAdvent span{
+	font-size: 15px;
+}
+.nickName{
+	font-size: 16px;
+	font-weight: bold;
+	color: #88a548;
 }

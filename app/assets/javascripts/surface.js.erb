@@ -227,7 +227,6 @@ var Surface = function(createCallback)
 	function addEventListeners() {
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'mousemove', onDocumentMouseMove, false );
-		window.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	}
 
 	// Настраиваем камеру в зависимости от размера страницы
@@ -253,15 +252,9 @@ var Surface = function(createCallback)
 		boardsCtrl.onDocumentMouseMove(raycaster);
 	}
 
-	function onDocumentMouseDown(event) {
-		var advert = boardsCtrl.onDocumentMouseDown();
-		if(advert) {
-			console.log(advert);
-			self.scope.setAdvertText(advert.text);
-			self.scope.setAdvertNickName(advert.nickname);
-			self.scope.setPage(4);
-		}
-	}
+	this.onDocumentMouseDown = function() {
+		return boardsCtrl.onDocumentMouseDown();
+	};
 
 	this.getBoardsCtrl = function() {
 		return boardsCtrl;

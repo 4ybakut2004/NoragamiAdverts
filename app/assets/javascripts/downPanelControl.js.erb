@@ -11,8 +11,8 @@ function controlPage($scope, Advert){
 	}
 	// Создаем трехмерный мир
 	$scope.surface = new Surface(function() {
+		$scope.loaded = true;
 		$scope.addAdvertsAndAnimate();
-		$scope.surface.scope = $scope;
 	});
 
 	window.addEventListener( 'mousedown', onDocumentMouseDown, false );

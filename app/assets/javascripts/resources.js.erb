@@ -99,6 +99,12 @@ var Resources = function() {
 
 		var resourcesCount = scope.texturesUrls.length + scope.modelsUrls.length;
 
+		$('#loading').css({
+			//height: 172.0 * (loadedCount / resourcesCount)
+			'margin-top': (172 * (1.0 - loadedCount / resourcesCount) - 86.0) + 'px',
+			'background-position': '0 ' + (172.0 * (loadedCount / resourcesCount) - 172.0) + 'px'
+		});
+
 		if(loadedCount == resourcesCount) {
 			callback();
 		}

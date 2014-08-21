@@ -1,75 +1,76 @@
 <div ng-app="noragamiAdverts" ng-controller="controlPage">
-	<div id = "downPanelControl">
-		<ul class = "panelButton">
-			<li ng-click="setPage(0)" ng-class="{img: imgFlag==0}" title="Пополнить доску объявлений" class = "editting"></li>
-			<li ng-click="setPage(1)" ng-class="{img: imgFlag==1}" title="Настройки" class = "addAdvent"></li>
-			<li ng-click="setPage(2)" ng-class="{img: imgFlag==2}" title="Авторский состав" class = "avtor"></li>
-			<li ng-click="setPage(3)" ng-class="{img: imgFlag==3}" title="Агитационный материал" class = "baner"></li>
-		</ul>
-	</div>
-	
-	<!--Разные выпадающие окна-->
-	<div id="editting" title="Настройки">
-		<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(1)"></button>
-		<div class = "whitePanel">
-			<p>Возможно, наша игра у Вас не запустилась, тогда Вам <a href = "http://potc-game.herokuapp.com/">сюда</a>!
-			Если же причина в другом, и вы в этом убеждены, тогда напишите разработчикам!</p><br/>
-			<div id="slider-range-max"></div>
+	<div class="under-loading" ng-show="!loaded"></div>
+	<div id = "loading" class="loading" ng-show="!loaded"></div>
+	<div id = "game" ng-show="loaded">
+		<div id = "downPanelControl">
+			<ul class = "panelButton">
+				<li ng-click="setPage(0)" ng-class="{img: imgFlag==0}" title="Пополнить доску объявлений" class = "editting"></li>
+				<li ng-click="setPage(1)" ng-class="{img: imgFlag==1}" title="Настройки" class = "addAdvent"></li>
+				<li ng-click="setPage(2)" ng-class="{img: imgFlag==2}" title="Авторский состав" class = "avtor"></li>
+				<li ng-click="setPage(3)" ng-class="{img: imgFlag==3}" title="Агитационный материал" class = "baner"></li>
+			</ul>
 		</div>
-		<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(1)"></button>
-		<div class = "yato"></div>
-	</div>
-
-	<div id="addAdvent">
-		<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(0)"></button>
-		<form ng-submit="createAdvert()">
-			<div class = "panelAddAdventFon">
-					<img src = "<%= asset_path 'design/pen.png' %>"/><div class = "headAdvent"></div>
-					<input ng-model="newAvatar" style = "margin-top: 10px" class="tags" placeholder = "URL аватара">
-					<input ng-model="newNickName" class="tags" placeholder = "Автор">
-					<textarea ng-model="newText" class = "advent" placeholder = "Текст объявления..."></textarea>
+		
+		<!--Разные выпадающие окна-->
+		<div id="editting" title="Настройки">
+			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(1)"></button>
+			<div class = "whitePanel">
+				<p>Возможно, наша игра у Вас не запустилась, тогда Вам <a href = "http://potc-game.herokuapp.com/">сюда</a>!
+				Если же причина в другом, и вы в этом убеждены, тогда напишите разработчикам!</p><br/>
+				<div id="slider-range-max"></div>
 			</div>
-			<button id = "buttonAddAdvent" class="v-t"></button>
+			<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(1)"></button>
 			<div class = "yato"></div>
-			<div class = "error" ng-show="newAvatarError || newNickNameError || newTextError">
-				{{getFirstError()}}
-			</div>
-		<!--Ошибка! Длина сообщения больше 100 символов.-->
-		<!--Ошибка! Введите текст объявления.-->
-		<!--Ошибка! А как же все узнают об авторе?-->
-		</form>
-	</div>
+		</div>
 
-	<div id="avtor" title="Про авторов">
-		<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(2)"></button>
-		<div class = "whitePanel">
-			<p style = "padding: 80px 30px 0px 45px;">Сайт разработан специально для летней Фандомной битвы 2014 на dairy.ru командой <a href = "#">Noragami</a>.</p>
-			<p style = "padding: 20px 30px 0px 45px;">Полный авторский состав будет представлен после деанона.</p>
+		<div id="addAdvent">
+			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(0)"></button>
+			<form ng-submit="createAdvert()">
+				<div class = "panelAddAdventFon">
+						<img src = "<%= asset_path 'design/pen.png' %>"/><div class = "headAdvent"></div>
+						<input ng-model="newAvatar" style = "margin-top: 10px" class="tags" placeholder = "URL аватара">
+						<input ng-model="newNickName" class="tags" placeholder = "Автор">
+						<textarea ng-model="newText" class = "advent" placeholder = "Текст объявления..."></textarea>
+				</div>
+				<button id = "buttonAddAdvent" class="v-t"></button>
+				<div class = "yato"></div>
+				<div class = "error" ng-show="newAvatarError || newNickNameError || newTextError">
+					{{getFirstError()}}
+				</div>
+			</form>
 		</div>
-		<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(2)"></button>
-		<div class = "yato"></div>
-	</div>
-	
-	<div id="baner" title="Агитационный материал"> 
-		<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(3)"></button>
-		<div class = "whitePanel">
-			<img src = "<%= asset_path 'design/bannerComand.png' %>"/>
-			<img style = "width: 61.5%;" src = "<%= asset_path 'design/funyTen.png' %>"/>
-			<textarea class = "textarea2"><a href = "http://fk-2014.diary.ru/?tag=5108852"><img src = "https://www.dropbox.com/s/zppv676zdcpdye8/BANNER_KOMANDY.png?dl=1"/></a></textarea>
-			<textarea class = "textarea1"><a href = "http://noragami-adverts.herokuapp.com/"><img src = "https://www.dropbox.com/s/yw5gqy9h417x2rz/%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%20%D0%B8%D0%B3%D1%80%D1%8B%20%D0%B4%D0%B5%D1%81%D1%8F%D1%82%D0%BA%D0%B0.png?dl=1"/></a></textarea><br/>
+
+		<div id="avtor" title="Про авторов">
+			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(2)"></button>
+			<div class = "whitePanel">
+				<p style = "padding: 80px 30px 0px 45px;">Сайт разработан специально для летней Фандомной битвы 2014 на dairy.ru командой <a href = "#">Noragami</a>.</p>
+				<p style = "padding: 20px 30px 0px 45px;">Полный авторский состав будет представлен после деанона.</p>
+			</div>
+			<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(2)"></button>
+			<div class = "yato"></div>
 		</div>
-		<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(3)"></button>
-		<div class = "yato"></div>
-	</div>
-	
-	<div id="showAdvent" title="Объявление №"> 
-		<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(4)"></button>
-		<div class = "whitePanel">
-			<!--<img src = "914.gif"/>-->
-			<span class = "textAdvert">{{advertText}}</span>
+		
+		<div id="baner" title="Агитационный материал"> 
+			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(3)"></button>
+			<div class = "whitePanel">
+				<img src = "<%= asset_path 'design/bannerComand.png' %>"/>
+				<img style = "width: 61.5%;" src = "<%= asset_path 'design/funyTen.png' %>"/>
+				<textarea class = "textarea2"><a href = "http://fk-2014.diary.ru/?tag=5108852"><img src = "https://www.dropbox.com/s/zppv676zdcpdye8/BANNER_KOMANDY.png?dl=1"/></a></textarea>
+				<textarea class = "textarea1"><a href = "http://noragami-adverts.herokuapp.com/"><img src = "https://www.dropbox.com/s/yw5gqy9h417x2rz/%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%20%D0%B8%D0%B3%D1%80%D1%8B%20%D0%B4%D0%B5%D1%81%D1%8F%D1%82%D0%BA%D0%B0.png?dl=1"/></a></textarea><br/>
+			</div>
+			<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(3)"></button>
+			<div class = "yato"></div>
 		</div>
-		<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(4)"></button>
-		<div class = "yato"></div>
-		<div class = "error nickName">{{advertNickName}}</div>
+		
+		<div id="showAdvent" title="Объявление №"> 
+			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(4)"></button>
+			<div class = "whitePanel">
+				<!--<img src = "914.gif"/>-->
+				<span class = "textAdvert">{{advertText}}</span>
+			</div>
+			<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(4)"></button>
+			<div class = "yato"></div>
+			<div class = "error nickName">{{advertNickName}}</div>
+		</div>
 	</div>
 </div>

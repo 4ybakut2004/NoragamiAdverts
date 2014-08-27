@@ -143,15 +143,18 @@ function controlPage($scope, Advert){
 	};
 
 	$scope.validateNewNickName = function() {
-		var result = $scope.newNickName != null &&
-					 $scope.newNickName != undefined &&
-					 $scope.newNickName != "" &&
-					 $scope.newNickName.length <= 50;
+		var result = true;
 
-		if(!result) {
-			$scope.newNickNameError = "Имя должно быть введено и не должно превышать 50 символов";
+		if($scope.newNickName === null || $scope.newNickName === undefined || $scope.newNickName === "") {
+			$scope.newNickNameError = "Имя должно быть введено";
+			result = false;
 		} else {
-			$scope.newNickNameError = "";
+			if($scope.newNickName.length > 50) {
+				$scope.newNickNameError = "Имя не должно превышать 50 символов";
+				result = false;
+			} else {
+				$scope.newNickNameError = "";
+			}
 		}
 
 		return result;

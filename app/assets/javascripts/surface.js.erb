@@ -80,6 +80,12 @@ var Surface = function(createCallback)
 		resources.addModel("/assets/objects/temple/temple.js");
 
 		resources.addTexture("<%= asset_path 'spark.png' %>");
+
+		// Неприличные надписи
+		resources.addTexture("<%= asset_path 'fuck_temple.png' %>");
+		resources.addTexture("<%= asset_path 'dick.png' %>");
+		resources.addTexture("<%= asset_path 'boob.png' %>");
+		resources.addTexture("<%= asset_path 'fuck_me.png' %>");
 		
 		resources.load(function() {
 			init();

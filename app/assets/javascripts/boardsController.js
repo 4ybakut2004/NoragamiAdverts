@@ -17,13 +17,13 @@ var BoardsController = function(resources) {
 	}
 
 	function initBoards() {
-		boardLeft = new Board(resources);
+		boardLeft = new Board(resources, "dick");
 		boardLeft.getObject().position.z = -0.3;
 		boardLeft.getObject().position.x = -0.3;
 		boardLeft.getObject().position.y = -0.1;
 		boardLeft.getObject().rotation.y = 3.14/2.5;
 
-		boardRight = new Board(resources);
+		boardRight = new Board(resources, "boob");
 		boardRight.getObject().position.z = -0.3;
 		boardRight.getObject().position.x = 0.3;
 		boardRight.getObject().position.y = -0.1;

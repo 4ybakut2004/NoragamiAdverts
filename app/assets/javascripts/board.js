@@ -1,4 +1,4 @@
-var Board = function(resources) {
+var Board = function(resources, texName) {
 
 	var object = new THREE.Object3D();
 
@@ -8,6 +8,7 @@ var Board = function(resources) {
 	var roof;           // крышка у доски объявлений
 	var circles = [];   // Лампочки
 	var light;          // Свет
+	var sticker;        // Неприличная надпись
 
 	// Предустановленные позиции объявлений
 	var advertsPositions = [
@@ -25,6 +26,7 @@ var Board = function(resources) {
 		board = createBoard();
 		roof = createRoof();
 		light = createLight();
+		sticker = createSticker();
 
 		circles.push(generationLightPoint(-0.03, 0.168, 0.015));
 		circles.push(generationLightPoint(0.0, 0.168, 0.015));
@@ -34,6 +36,7 @@ var Board = function(resources) {
 		object.add(board);
 		object.add(roof);
 		object.add(light);
+		object.add(sticker);
 
 		for(var i = 0; i < circles.length; i++) {
 			object.add(circles[i]);
@@ -139,6 +142,25 @@ var Board = function(resources) {
 		box.receiveShadow = true;
 		
 		return box;
+	}
+
+	function createSticker() {
+		var _sticker = getPanel(0.05, 0.025, resources.textures[texName], 1.0, 1.0);
+		_sticker.material.transparent = true;
+		_sticker.receiveShadow = true;
+		if(texName == "dick") {
+			_sticker.rotation.z = 3.14 / 2;
+			_sticker.position.x = -0.048;
+			_sticker.position.y = 0.065;
+		}
+		if(texName == "boob") {
+			_sticker.rotation.z = 3.14 / 2.5;
+			_sticker.position.x = 0.048;
+			_sticker.position.y = 0.06;
+		}
+		_sticker.position.z = 0.0053;
+
+		return _sticker;
 	}
 
 	function createLight() {

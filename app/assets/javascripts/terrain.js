@@ -9,12 +9,14 @@ var Terrain = function(resources) {
 	var treesLeft = [];             // массив левых деревьев
 	var treesRight = [];            // массив правых деревьев
 	var treesCount = 5;
+	var stickers = [];              // Неприличные надписи
 
 	init();
 
 	function init() {
 		initGrass();
 		initFootPath();
+		initStickers();
 		initBorders();
 		initTrees();
 		
@@ -22,6 +24,9 @@ var Terrain = function(resources) {
 		object.add(footpath);
 		object.add(borderLeft);
 		object.add(borderRight);
+		for(var i = 0; i < stickers.length; i++) {
+			object.add(stickers[i]);
+		}
 	}
 	
 	/**
@@ -43,7 +48,18 @@ var Terrain = function(resources) {
 		footpath.position.y = -0.198;
 		footpath.receiveShadow = true;
 	}
-	
+
+	function initStickers() {
+		var sticker = getPanel(0.4, 0.2, resources.textures.fuck_temple, 1.0, 1.0);
+		sticker.material.transparent = true;
+		sticker.rotation.x = - 3.14 / 2;
+		sticker.receiveShadow = true;
+		sticker.position.y = -0.19;
+		sticker.position.x = 0.0;
+		sticker.position.z = -0.5;
+		stickers.push(sticker);
+	}
+
 	/**
 	* все, что относится к инициализации бордюров
 	*/
@@ -88,7 +104,7 @@ var Terrain = function(resources) {
 				tree.scale.z = 0.06;
 
 				tree.position.y = -0.2;
-				tree.position.z = - (i % treesCount) * 1.2 / treesCount - 0.5;
+				tree.position.z = - (i % treesCount) * 1.2 / treesCount - 0.6;
 
 				if(i < treesCount) {
 					tree.position.x = -0.45;

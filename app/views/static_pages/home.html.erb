@@ -28,7 +28,8 @@
 			<form ng-submit="createAdvert()">
 				<div class = "panelAddAdventFon">
 						<img src = "<%= asset_path 'design/pen.png' %>"/><div class = "headAdvent"></div>
-						<input ng-model="newAvatar" style = "margin-top: 10px" class="tags" placeholder = "URL аватара">
+						<input id="file-input" style = "margin-top: 10px" class="tags" type="file">
+						<input id="new-avatar" ng-model="newAvatar" type="hidden">
 						<input ng-model="newNickName" class="tags" placeholder = "Автор">
 						<textarea ng-model="newText" class = "advent" placeholder = "Текст объявления..."></textarea>
 				</div>
@@ -39,6 +40,57 @@
 				</div>
 			</form>
 		</div>
+
+		<script type="text/javascript">
+			$(function() {
+				var fileInput    = $('#file-input');
+				var form         = $(fileInput.parents('form:first'));
+				var submitButton = form.find('#buttonAddAdvent');
+				var progressBar  = $("<div class='bar'></div>");
+				var barContainer = $("<div class='progress'></div>").append(progressBar);
+				fileInput.after(barContainer);
+				fileInput.fileupload({
+					fileInput:       fileInput,
+					url:             '<%= @s3_direct_post.url %>',
+					type:            'POST',
+					autoUpload:       true,
+					formData:         <%= @s3_direct_post.fields.to_json.html_safe %>,
+					paramName:        'file', // S3 does not like nested name fields i.e. name="user[avatar_url]"
+					dataType:         'XML',  // S3 returns XML if success_action_status is set to 201
+					replaceFileInput: false,
+					progressall: function (e, data) {
+						var progress = parseInt(data.loaded / data.total * 100, 10);
+						progressBar.css('width', progress + '%')
+					},
+					start: function (e) {
+						submitButton.prop('disabled', true);
+
+						progressBar.
+						css('background', 'green').
+						css('display', 'block').
+						css('width', '0%').
+						text("Загрузка...");
+					},
+					done: function(e, data) {
+						submitButton.prop('disabled', false);
+						progressBar.text("Готово!");
+
+						// extract key and generate URL from response
+						var key   = $(data.jqXHR.responseXML).find("Key").text();
+						var url   = '//<%= @s3_direct_post.url.host %>/' + key;
+
+						$('#new-avatar').val(url);
+					},
+					fail: function(e, data) {
+						submitButton.prop('disabled', false);
+
+						progressBar.
+						css("background", "red").
+						text("Ошибка");
+					}
+				});
+			});
+		</script>
 
 		<div id="avtor" title="Про авторов">
 			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(2)"></button>

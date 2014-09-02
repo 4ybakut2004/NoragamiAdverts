@@ -14,6 +14,7 @@ function getRandomInt(min, max){
  */
 var Surface = function(createCallback)
 {
+	THREE.ImageUtils.crossOrigin = "";
 	var scene, camera, renderer;							// Экран, камера и рендер
 	var controls;											// Объект управления камерой
 	var skyBox;												// Объект класса SkyBox

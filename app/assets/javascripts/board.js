@@ -193,12 +193,12 @@ var Board = function(resources, texName) {
 		};
 
 		// Создаем объявляшку
+		advert.info = options.info;
 		if(options.object) {
 			advert.object = options.object;
 		} else {
-			advert.object = createAdvert();
+			advert.object = createAdvert(options.info.avatar);
 		}
-		advert.info = options.info;
 
 		// Если доска переполнена, отрываем старое объявление и смещаем все в его сторону
 		if(advertsCount >= maxAdverts) {
@@ -225,8 +225,13 @@ var Board = function(resources, texName) {
 		return deleted;
 	};
 
-	function createAdvert() {
-		var texture = resources.textures.message_on_board.clone();
+	function createAdvert(image_url) {
+		var texture;
+		if(image_url) {
+			texture = THREE.ImageUtils.loadTexture(image_url);
+		} else {
+			texture = resources.textures.message_on_board.clone();
+		}
 		texture.needsUpdate = true;
 
 		var advert = getPanel(0.03, 0.06, texture, 1.0, 1.0);

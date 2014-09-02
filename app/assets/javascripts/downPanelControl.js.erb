@@ -98,7 +98,7 @@ function controlPage($scope, Advert){
 	$scope.createAdvert = function() {
 		var attr = {};
 		attr.nickname = $scope.newNickName;
-		attr.avatar = $scope.newAvatar;
+		attr.avatar = $('#new-avatar').val();
 		attr.text = $scope.newText;
 
 		if($scope.validateNewAdvert()) {
@@ -120,11 +120,12 @@ function controlPage($scope, Advert){
 
 	$scope.resetNewAdvert = function() {
 		$scope.newNickName = "";
-		$scope.newAvatar = "";
+		$('#new-avatar').val("");
+		$('#file-input').val("");
+		$('.bar').css({display: 'none'});
 		$scope.newText = "";
 
 		$scope.newNickNameError = "";
-		$scope.newAvatarError = "";
 		$scope.newTextError = "";
 	};
 
@@ -136,10 +137,9 @@ function controlPage($scope, Advert){
 
 	$scope.validateNewAdvert = function() {
 		var nickname = $scope.validateNewNickName();
-		var avatar = $scope.validateNewAvatar();
 		var text = $scope.validateNewText();
 
-		return nickname && avatar && text;
+		return nickname && text;
 	};
 
 	$scope.validateNewNickName = function() {
@@ -155,18 +155,6 @@ function controlPage($scope, Advert){
 			} else {
 				$scope.newNickNameError = "";
 			}
-		}
-
-		return result;
-	};
-
-	$scope.validateNewAvatar = function() {
-		var result = $scope.newAvatar.length <= 255;
-
-		if(!result) {
-			$scope.newAvatarError = "Ссылка не должна превышать 255 символов";
-		} else {
-			$scope.newAvatarError = "";
 		}
 
 		return result;
@@ -194,10 +182,6 @@ function controlPage($scope, Advert){
 		$scope.newNickNameError = "";
 	});
 
-	$scope.$watch('newAvatar', function() {
-		$scope.newAvatarError = "";
-	});
-
 	$scope.$watch('newText', function() {
 		$scope.newTextError = "";
 	});
@@ -209,9 +193,6 @@ function controlPage($scope, Advert){
 		}
 		if($scope.newNickNameError) {
 			error = $scope.newNickNameError;
-		}
-		if($scope.newAvatarError) {
-			error = $scope.newAvatarError;
 		}
 		return error;
 	};

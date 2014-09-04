@@ -151,11 +151,11 @@ function controlPage($scope, Advert) {
 		var result = true;
 
 		if($scope.newNickName === null || $scope.newNickName === undefined || $scope.newNickName === "") {
-			$scope.newNickNameError = "Имя должно быть введено";
+			$scope.newNickNameError = "Ошибка! Имя должно быть введено";
 			result = false;
 		} else {
 			if($scope.newNickName.length > 50) {
-				$scope.newNickNameError = "Имя не должно превышать 50 символов";
+				$scope.newNickNameError = "Ошибка! Имя не должно превышать 50 символов";
 				result = false;
 			} else {
 				$scope.newNickNameError = "";

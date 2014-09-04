@@ -23,6 +23,8 @@ function controlPage($scope, Advert) {
 			if(advert) {
 				$scope.advertText = advert.text;
 				$scope.advertNickName = advert.nickname;
+				$scope.advertAvatar = advert.avatar;
+				console.log($scope.advertAvatar);
 				$scope.setPage(4);
 			}
 		});
@@ -122,7 +124,10 @@ function controlPage($scope, Advert) {
 		$scope.newNickName = "";
 		$('#new-avatar').val("");
 		$('#file-input').val("");
-		$('.bar').css({display: 'none'});
+		$('.bar').text("Выберите аватар 100x100 не более 1Мб");
+		$('.bar').css({
+			'background': 'none'
+		});
 		$scope.newText = "";
 
 		$scope.newNickNameError = "";

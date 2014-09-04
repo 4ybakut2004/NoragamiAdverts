@@ -231,8 +231,8 @@ var Board = function(resources, texName) {
 			texture = THREE.ImageUtils.loadTexture(image_url);
 		} else {
 			texture = resources.textures.message_on_board.clone();
+			texture.needsUpdate = true;
 		}
-		texture.needsUpdate = true;
 
 		var advert = getPanel(0.03, 0.06, texture, 1.0, 1.0);
 		advert.receiveShadow = true;

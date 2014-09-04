@@ -28,7 +28,7 @@
 			<form ng-submit="createAdvert()">
 				<div class = "panelAddAdventFon">
 						<img src = "<%= asset_path 'design/pen.png' %>"/><div class = "headAdvent"></div>
-						<input id="file-input" style = "margin-top: 10px" class="tags" type="file">
+						<input id="file-input" style = "margin-top: 10px; line-height: 2;" class="tags" type="file" accept="image/*">
 						<input id="new-avatar" ng-model="newAvatar" type="hidden">
 						<input ng-model="newNickName" class="tags" placeholder = "Автор">
 						<textarea ng-model="newText" class = "advent" placeholder = "Текст объявления..."></textarea>
@@ -46,25 +46,46 @@
 				var fileInput    = $('#file-input');
 				var form         = $(fileInput.parents('form:first'));
 				var submitButton = form.find('#buttonAddAdvent');
-				var progressBar  = $("<div class='bar'></div>");
+				var progressBar  = $("<div class='bar'>Выберите аватар 100x100 не более 1Мб</div>");
 				var barContainer = $("<div class='progress'></div>").append(progressBar);
-				fileInput.after(barContainer);
+				var submitAction;
+				fileInput.before(barContainer);
+
 				fileInput.fileupload({
 					fileInput:       fileInput,
 					url:             '<%= @s3_direct_post.url %>',
 					type:            'POST',
-					autoUpload:       true,
+					autoUpload:       false,
 					formData:         <%= @s3_direct_post.fields.to_json.html_safe %>,
 					paramName:        'file', // S3 does not like nested name fields i.e. name="user[avatar_url]"
 					dataType:         'XML',  // S3 returns XML if success_action_status is set to 201
 					replaceFileInput: false,
+					add: function(e, data) {
+						var files = data.files;
+
+						var result = true;
+						for (var i = 0, f; f = files[i]; i++) {
+							if(f.size > 1048576 || !f.type.match("image")) {
+								result = false;
+							}
+						}
+						if(result) {
+							data.submit();
+						} else {
+							submitButton.prop('disabled', false);
+							progressBar.
+							css('background', 'red').
+							css('display', 'block').
+							css('width', '100%').
+							text("Ошибка");
+						}
+					},
 					progressall: function (e, data) {
 						var progress = parseInt(data.loaded / data.total * 100, 10);
 						progressBar.css('width', progress + '%')
 					},
 					start: function (e) {
 						submitButton.prop('disabled', true);
-
 						progressBar.
 						css('background', 'green').
 						css('display', 'block').
@@ -117,7 +138,7 @@
 		<div id="showAdvent" title="Объявление №"> 
 			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(4)"></button>
 			<div class = "whitePanel">
-				<!--<img src = "914.gif"/>-->
+				<img ng-show="advertAvatar" ng-src="{{advertAvatar}}" style="width: 100px; height: 100px;"/>
 				<span class = "textAdvert">{{advertText}}</span>
 			</div>
 			<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(4)"></button>

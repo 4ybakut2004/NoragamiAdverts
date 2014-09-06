@@ -59,16 +59,15 @@ function controlPage($scope, Advert) {
 		rules: 5
 	};
 
-	$scope.sound = new Sound(['./audio/end.ogg']);
+	$scope.sound = new Sound(['/assets/audio/sound.ogg']);
 	$scope.sound.play();
-	$scope.sound.setVolume(1);
 	$scope.imgFlag = -1;
 	
 	$( "#slider-range-max" ).slider({
 		range: "max",
 		min: 0,
 		max: 10,
-		value: 1,
+		value: 10,
 		slide: function( event, ui ) {
 			//ui.value - это значение будет устанавливаться громкостью
 			$scope.sound.setVolume(ui.value*0.1);

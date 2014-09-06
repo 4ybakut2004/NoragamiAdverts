@@ -13,6 +13,7 @@ function controlPage($scope, Advert) {
 	$scope.surface = new Surface(function() {
 		$scope.loaded = true;
 		$scope.addAdvertsAndAnimate();
+		$scope.setPage(5, false);
 	});
 
 	window.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -25,7 +26,7 @@ function controlPage($scope, Advert) {
 				$scope.advertNickName = advert.nickname;
 				$scope.advertAvatar = advert.avatar;
 				console.log($scope.advertAvatar);
-				$scope.setPage(4);
+				$scope.setPage(4, false);
 			}
 		});
 	}
@@ -46,14 +47,16 @@ function controlPage($scope, Advert) {
 				  {id: '#editting', width: 451, height: 397, resizable: false, dialogClass: 'edittingWidget', opened: false},
 				  {id: '#avtor', width: 451, height: 397, resizable: false, dialogClass: 'avtorWidget', opened: false},
 				  {id: '#baner', width: 451, height: 397, resizable: false, dialogClass: 'banerWidget', opened: false},
-				  {id: '#showAdvent', width: 451, height: 397, resizable: false, dialogClass: 'showAdventWidget', opened: false}];
+				  {id: '#showAdvent', width: 451, height: 397, resizable: false, dialogClass: 'showAdventWidget', opened: false},
+				  {id: '#rules', width: 451, height: 397, resizable: false, dialogClass: 'ruleWidget', opened: false}];
 
 	$scope.dialogs = {
 		addAdvent: 0,
 		editting: 1,
 		avtor: 2,
 		baner: 3,
-		showAdvent: 4
+		showAdvent: 4,
+		rules: 5
 	};
 
 	$scope.sound = new Sound(['./audio/end.ogg']);
@@ -74,7 +77,8 @@ function controlPage($scope, Advert) {
 	
 	$( document ).tooltip();
 		
-	$scope.setPage = function(param) {
+	$scope.setPage = function(param, needsStop) {
+		needsStop = (needsStop === undefined) ? true : needsStop;
 		$( $scope.nameDialog[param].id ).dialog({width: $scope.nameDialog[param].width, height: $scope.nameDialog[param].height, resizable: $scope.nameDialog[param].resizable, dialogClass: $scope.nameDialog[param].dialogClass, closeOnEscape: false});
 		$scope.nameDialog[param].opened = true;
 
@@ -87,7 +91,11 @@ function controlPage($scope, Advert) {
 			}
 		});
 
-		$scope.surface.stop();
+		if(needsStop) {
+			$scope.surface.stop();
+		} else {
+			$scope.surface.start();
+		}
 	};
 	
 	$scope.closePage = function(param) {

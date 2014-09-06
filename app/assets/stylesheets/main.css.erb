@@ -42,7 +42,7 @@ canvas{
 	background: rgba( 180, 163, 144, 0.4);
 }
 
-.addAdventWidget.ui-widget-content, .edittingWidget.ui-widget-content, .avtorWidget.ui-widget-content, .banerWidget.ui-widget-content, .showAdventWidget.ui-widget-content{
+.addAdventWidget.ui-widget-content, .edittingWidget.ui-widget-content, .avtorWidget.ui-widget-content, .banerWidget.ui-widget-content, .showAdventWidget.ui-widget-content, .ruleWidget.ui-widget-content{
 	background: transparent !important;
 	outline: 0;
 	border: 0;
@@ -60,7 +60,7 @@ canvas{
 	left:50%;
 }
 
-#editting, #addAdvent, #avtor, #baner, #showAdvent{
+#editting, #addAdvent, #avtor, #baner, #showAdvent, #rules{
 	display: none;
 	background: url(<%= asset_path 'design/board.png' %>) no-repeat;
 	padding: 5px 20px;
@@ -207,6 +207,9 @@ p{
 #editting .whitePanel{margin: 90px 70px;}
 #baner  .whitePanel{padding: 55px 20px 0px 54px;}
 #showAdvent .whitePanel {margin: 85px 50px 20px 50px;}
+#rules .whitePanel{margin: 85px 50px 20px 50px;}
+
+.withYato {padding-right: 55px;}
 
 .textarea1{width: 120px;  resize: none; height: 20px}
 .textarea2{width: 120px;  resize: none; height: 20px}
@@ -282,4 +285,12 @@ p{
 	padding: 0.2em;
 	color:   black;
 	margin: 0px 5px !important;
+}
+
+.pan{
+	width: 43px;
+	height: 40px;
+	background: url(<%= asset_path 'design/buttons.png' %>) 0 0 no-repeat;
+	display: inline-block;
+	vertical-align: middle;
 }

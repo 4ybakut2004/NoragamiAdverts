@@ -5,9 +5,9 @@
 		<div id = "downPanelControl">
 			<ul class = "panelButton">
 				<li ng-click="setPage(0)" ng-class="{img: imgFlag==0}" title="Пополнить доску объявлений" class = "editting"></li>
-				<li ng-click="setPage(1)" ng-class="{img: imgFlag==1}" title="Настройки" class = "addAdvent"></li>
-				<li ng-click="setPage(2)" ng-class="{img: imgFlag==2}" title="Авторский состав" class = "avtor"></li>
-				<li ng-click="setPage(3)" ng-class="{img: imgFlag==3}" title="Агитационный материал" class = "baner"></li>
+				<li ng-click="setPage(1, false)" ng-class="{img: imgFlag==1}" title="Настройки" class = "addAdvent"></li>
+				<li ng-click="setPage(2, false)" ng-class="{img: imgFlag==2}" title="Авторский состав" class = "avtor"></li>
+				<li ng-click="setPage(3, false)" ng-class="{img: imgFlag==3}" title="Агитационный материал" class = "baner"></li>
 			</ul>
 		</div>
 		
@@ -144,6 +144,18 @@
 			<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(4)"></button>
 			<div class = "yato"></div>
 			<div class = "error nickName">{{advertNickName}}</div>
+		</div>
+
+		<div id="rules" title="Правила"> 
+			<button id = "buttonCansel" class="v-t opacity07 opacityNo" ng-click="closePage(5)"></button>
+			<div class = "whitePanel">
+				<p>Заполните доску заказов для Яточки!</p>
+				<p>Наш бедный Бог копит на храм, но заказов не хватает.</p>
+				<p>Чтобы заказ попал на доску тыкните на карандаш <span class='pan'></span></p>
+				<p class="withYato">На досках можно прочесть 10 последних заказов.</p>
+			</div>
+			<button id = "buttonAddAdvent" class="v-t"  ng-click="closePage(5)"></button>
+			<div class = "yato"></div>
 		</div>
 	</div>
 </div>
